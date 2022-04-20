@@ -1,0 +1,37 @@
+{
+    "manifest_version": 2,
+    "name": "接口抛错统计",
+    "description": "白龙马云行前端平台组",
+    "version": "1.0.0",
+    "browser_action": {
+        "default_title": "白龙马接口异常统计",
+        "default_icon": "icon.png",
+        "default_popup": "index.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.yueyuechuxing.cn/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "icons": {
+        "48": "icon.png"
+    },
+    "permissions": [
+        "history",
+        "webRequest",
+        "webRequestBlocking",
+        "tabs",
+        "<all_urls>",
+        "storage",
+        "*://*/*"
+    ],
+    "web_accessible_resources": [
+        "ajax-hooks.js"
+    ]
+}
