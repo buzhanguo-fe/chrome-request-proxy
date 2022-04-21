@@ -8,17 +8,26 @@ setTimeout(() => {
     const unHooks = document.createElement("script");
     unHooks.setAttribute("type", "text/javascript");
     unHooks.innerHTML = `
+
+          function __insertError() {
+              console.error('异常错误')
+          }
+
           window.ajaxHooks.proxy({
             onRequest: (config, handler) => {
-                console.log(config, '1111111111')
                 handler.next(config);
             },
             onError: (err, handler) => {
-                console.log(err.type, '1111111111')
+                __insertError(err)
                 handler.next(err)
             },
             onResponse: (response, handler) => {
-                console.log(response, '1111111111')
+                try {
+                  const { code, msg } = JSON.parse(response.response)
+                  if (  code !== 1 ) __insertError(response, msg)
+                }catch(err) {
+
+                }
                 handler.next(response)
             }
         })
